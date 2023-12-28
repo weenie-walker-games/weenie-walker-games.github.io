@@ -4,6 +4,12 @@
 
 @import "{{ site.theme }}";
 
+body {
+        background-color: Canvas;
+        color: CanvasText;
+        color-scheme: dark;
+}
+
 .post img {
         display: block;
         border:1px solid #021a40;
