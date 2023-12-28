@@ -21,9 +21,10 @@ use_math:
 google_analytics:
 
 # Everything below here can be ignored, unless you want to change the theme entirely
-theme: midnight
+remote_theme: pages-themes/midnight@v0.2.0
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
   - jekyll-gist
   - jekyll-octicons
   - jekyll-github-metadata
