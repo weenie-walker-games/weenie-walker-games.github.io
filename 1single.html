@@ -1,20 +1,44 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<body>
 <input id="photo" type="file">
 <div id="results"></div>
-<script>
-    async function loaded(reader) {
-        const response = await fetch('https://weeniewalkergames-cat-v-dog.hf.space/--replicas/mg85l/', {
-        method: "POST", body: JSON.stringify({ "data": [reader.result] }),
-        headers: { "Content-Type": "application/json"}
-    });
-        const json = await response.json();
-        const label = json['data'][0]['confidences'][0]['label'];
-        results.innerHTML = '<br/><img src="${reader.result}" width="300"> <p>${label}</p'
-    }
-    function read(){
-        const reader = new FileReader();
-        reader.addEventListener('load', () => loaded(reader))
-        reader.readAsDataURL(photo.files[0]);
-    }
-    photo.addEventListener('input', read);
+<button id="run"><strong>Generate Prompt</strong></button>
+</body>
+
+<script
+	type="module"
+	src="https://gradio.s3-us-west-2.amazonaws.com/3.14.0/gradio.js"
+></script>
+
+
+<script type="module">
+    import { client } from "https://cdn.jsdelivr.net/npm/@gradio/client@0.10.0/dist/index.min.js";
+	const inputImage = document.getElementById("photo");
+	const generate = document.getElementById("run");
+	const results = document.getElementById("results");
+
+	generate.addEventListener("click", async () =>{
+		try{
+			const imageInput = inputImage;
+
+
+			const app = await client("weeniewalkergames/cat_v_dog");
+			const result = await app.submit("/predict", [
+				imageInput,
+		])
+		const app_info = await app.view_api();
+		;
+
+		results.textContent = result.data;
+		console.log(app_info);
+
+		} catch (error){
+			console.log("Error:", error.message);
+		}
+	}
+	);
+			
 </script>
+</html>
